@@ -93,7 +93,7 @@ function EditorSidebarPure({
           <button
             className="btn btn-lg btn-info"
             title="Save current schema to the server"
-            onClick={() => onSaveToServer(`${encodeDescriptor(publicDescriptor)}`)}
+            onClick={() => onSaveToServer(`${helpers.stringifyDescriptor(publicDescriptor)}`)}
           >
             Save to server
           </button>
