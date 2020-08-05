@@ -3,6 +3,7 @@ const { connect } = require('react-redux')
 const { EditorMetadata } = require('./EditorMetadata')
 const { EditorKeywords } = require('./EditorKeywords')
 const helpers = require('../helpers')
+const onSaveToServer = require('./SaveToServer').onSaveToServer
 
 // Pure components
 
@@ -87,6 +88,15 @@ function EditorSidebarPure({
           >
             Download
           </a>
+
+          {/* Save to server */}
+          <button
+            className="btn btn-lg btn-info"
+            title="Save current schema to the server"
+            onClick={() => onSaveToServer(`${encodeDescriptor(publicDescriptor)}`)}
+          >
+            Save to server
+          </button>
         </div>
 
         <div className="panel-group" id="package-data" role="tablist" aria-multiselectable="true">
