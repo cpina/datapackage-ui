@@ -4,6 +4,7 @@ const { EditorMetadata } = require('./EditorMetadata')
 const { EditorKeywords } = require('./EditorKeywords')
 const helpers = require('../helpers')
 const onSaveToServer = require('./SaveToServer').onSaveToServer
+const onLoadFromServer = require('./LoadFromServer').onLoadFromServer
 
 // Pure components
 
@@ -97,6 +98,15 @@ function EditorSidebarPure({
           >
             Save to server
           </button>
+
+          {/* Load from server */}
+          <button
+            className="btn btn-lg btn-info"
+            title="Load from the server"
+            onClick={() => onLoadFromServer()}
+          >
+            Load from the server
+          </button>
         </div>
 
         <div className="panel-group" id="package-data" role="tablist" aria-multiselectable="true">
@@ -115,6 +125,8 @@ function EditorSidebarPure({
 
 const mapDispatchToProps = (dispatch) => ({
   onUploadChange: (ev) => {
+    // eslint-disable-next-line no-undef
+    alert('here')
     const reader = new window.FileReader()
     reader.readAsText(ev.target.files[0])
     reader.onload = () => {
