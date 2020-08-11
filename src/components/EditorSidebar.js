@@ -139,7 +139,8 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   onLoadFromServer: () => {
-    axios.get('/api/schema/61d79625-c2f7-4886-81cc-f30f6020e2e1/').then((resp) => {
+    const uuid = getParameterFromUrlByName('load')
+    axios.get('/api/schema/' + uuid + '/').then((resp) => {
       console.log(resp.data)
       dispatch({
         type: 'UPLOAD_PACKAGE',
@@ -159,6 +160,19 @@ const mapDispatchToProps = (dispatch) => ({
 function encodeDescriptor(descriptor) {
   const text = encodeURIComponent(helpers.stringifyDescriptor(descriptor))
   return `text/json;charset=utf-8,${text}`
+}
+
+function getParameterFromUrlByName(name, url) {
+  // Copied and slightly changed from https://stackoverflow.com/a/901144/9294284
+  // (it seems to be CC-BY-SA 4.0, I might replace this after prototyping)
+  if (!url) url = window.location.href
+
+  name = name.replace(/[[\]]/g, '\\$&')
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+  var results = regex.exec(url)
+  if (!results) return null
+  if (!results[2]) return ''
+  return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
 
 // Wrappers
