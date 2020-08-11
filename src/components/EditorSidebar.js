@@ -1,10 +1,11 @@
+const axios = require('axios')
 const React = require('react')
+
 const { connect } = require('react-redux')
 const { EditorMetadata } = require('./EditorMetadata')
 const { EditorKeywords } = require('./EditorKeywords')
 const helpers = require('../helpers')
 const onSaveToServer = require('./SaveToServer').onSaveToServer
-const onLoadFromServer = require('./LoadFromServer').onLoadFromServer
 
 // Pure components
 
@@ -15,6 +16,7 @@ function EditorSidebarPure({
 
   // Handlers
   onUploadChange,
+  onLoadFromServer,
   onValidateClick,
 }) {
   return (
@@ -103,7 +105,7 @@ function EditorSidebarPure({
           <button
             className="btn btn-lg btn-info"
             title="Load from the server"
-            onClick={() => onLoadFromServer()}
+            onClick={onLoadFromServer}
           >
             Load from the server
           </button>
@@ -136,7 +138,15 @@ const mapDispatchToProps = (dispatch) => ({
       })
     }
   },
-
+  onLoadFromServer: () => {
+    axios.get('/api/schema/61d79625-c2f7-4886-81cc-f30f6020e2e1/').then((resp) => {
+      console.log(resp.data)
+      dispatch({
+        type: 'UPLOAD_PACKAGE',
+        payload: resp.data,
+      })
+    })
+  },
   onValidateClick: () => {
     dispatch({
       type: 'VALIDATE_PACKAGE',
