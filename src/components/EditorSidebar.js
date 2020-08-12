@@ -6,6 +6,7 @@ const { EditorMetadata } = require('./EditorMetadata')
 const { EditorKeywords } = require('./EditorKeywords')
 const helpers = require('../helpers')
 const onSaveToServer = require('./SaveToServer').onSaveToServer
+const getParameterFromUrlByName = require('../helpers').getParameterFromUrlByName
 
 // Pure components
 
@@ -127,8 +128,6 @@ function EditorSidebarPure({
 
 const mapDispatchToProps = (dispatch) => ({
   onUploadChange: (ev) => {
-    // eslint-disable-next-line no-undef
-    alert('here')
     const reader = new window.FileReader()
     reader.readAsText(ev.target.files[0])
     reader.onload = () => {
@@ -160,19 +159,6 @@ const mapDispatchToProps = (dispatch) => ({
 function encodeDescriptor(descriptor) {
   const text = encodeURIComponent(helpers.stringifyDescriptor(descriptor))
   return `text/json;charset=utf-8,${text}`
-}
-
-function getParameterFromUrlByName(name, url) {
-  // Copied and slightly changed from https://stackoverflow.com/a/901144/9294284
-  // (it seems to be CC-BY-SA 4.0, I might replace this after prototyping)
-  if (!url) url = window.location.href
-
-  name = name.replace(/[[\]]/g, '\\$&')
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-  var results = regex.exec(url)
-  if (!results) return null
-  if (!results[2]) return ''
-  return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
 
 // Wrappers

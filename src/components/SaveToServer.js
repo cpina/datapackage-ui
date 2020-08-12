@@ -1,17 +1,31 @@
-import fetch from 'isomorphic-fetch'
+const axios = require('axios')
+const getParameterFromUrlByName = require('../helpers').getParameterFromUrlByName
 
 export function onSaveToServer(data) {
   // Example found in https://codereviewvideos.com/course/symfony-3-with-reactjs-and-angular/video/react-create-post
+  const uuid = getParameterFromUrlByName('load')
 
-  return fetch('/api/schema/', {
-    method: 'POST',
-    body: data,
-    headers: {
-      'Content-Disposition': 'attachment; filename="filename.jpg"',
-    },
+  let url = ''
+  let method = ''
+  // eslint-disable-next-line no-undef
+
+  if (uuid === null) {
+    url = '/api/schema/'
+    method = 'POST'
+  } else {
+    url = '/api/schema/' + uuid + '/'
+    method = 'PUT'
+  }
+
+  return axios(url, {
+    method: method,
+    data: data,
   })
     .then((res) => {
       console.log(res)
+      // TODO: move this from here: the user of this function should do this
+      // eslint-disable-next-line no-undef
+      alert('Saved. Your UUID: ' + res.data.uuid)
       return res
     })
     .catch((err) => err)
