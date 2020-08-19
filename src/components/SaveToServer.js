@@ -10,10 +10,10 @@ export function onSaveToServer(data) {
   // eslint-disable-next-line no-undef
 
   if (uuid === null) {
-    url = '/api/schema/'
+    url = '/api/datapackage/'
     method = 'POST'
   } else {
-    url = '/api/schema/' + uuid + '/'
+    url = '/api/datapackage/' + uuid + '/'
     method = 'PUT'
   }
 

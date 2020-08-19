@@ -139,7 +139,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onLoadFromServer: () => {
     const uuid = getParameterFromUrlByName('load')
-    axios.get('/api/schema/' + uuid + '/').then((resp) => {
+    axios.get('/api/datapackage/' + uuid + '/').then((resp) => {
       console.log(resp.data)
       dispatch({
         type: 'UPLOAD_PACKAGE',
